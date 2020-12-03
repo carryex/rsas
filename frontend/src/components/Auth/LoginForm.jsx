@@ -5,7 +5,7 @@ import {required} from "../../utils/validators/validators";
 const LoginForm = ({handleSubmit, error}) => {
     return (
         <form onSubmit={handleSubmit}>
-            {createField("login", "login", [required], Input, "text")}
+            {createField("username", "username", [required], Input, "text")}
             {createField("password", "password", [required], Input, "password")}
             {error && <div>{error}</div>}
             <div>

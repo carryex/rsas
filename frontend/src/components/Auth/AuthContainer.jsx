@@ -4,7 +4,7 @@ import {login} from "../../redux/auth-reducer";
 
 const AuthContainer = ({isAuth, login}) => {
     const onSubmit = (formData) => {
-        login(formData)
+        login(formData.username, formData.password)
     }
     if (isAuth) {
         return <h2>Hello!</h2>;
