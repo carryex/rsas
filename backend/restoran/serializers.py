@@ -4,4 +4,4 @@ from .models import CashDay
 class CashDaySerializer(serializers.ModelSerializer):
   class Meta:
     model = CashDay
-    fields = '__all__'
+    fields = ('open',)

@@ -7,12 +7,12 @@ let initialState = {
 };
 
 //reducer
-const restoranReducer = (state = initialState, action) => {
+const restaurantReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_IS_OPEN:
       return {
         ...state,
-        isOpen: action.isOpen,
+        ...action.payload,
       };
     default:
       return state;
@@ -26,12 +26,11 @@ export const setIsOpen = (isOpen) => ({
 });
 
 //thunks
-export const getRestoranIsOpen = () => async (dispach) => {
+export const getRestaurantIsOpen = () => async (dispach) => {
   try {
     let response = await restoranAPI.isOpen();
-    console.log(response);
     if (response.status === 200) {
-      dispach(setIsOpen(true));
+      dispach(setIsOpen(response.data.open));
     }
   } catch (e) {
     console.log(e);
@@ -39,4 +38,4 @@ export const getRestoranIsOpen = () => async (dispach) => {
 
 };
 
-export default restoranReducer;
+export default restaurantReducer;

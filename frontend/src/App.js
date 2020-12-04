@@ -6,6 +6,7 @@ import {compose} from 'redux';
 import AuthContainer from './components/Auth/AuthContainer';
 import MainPageContainer from './components/MainPage/MainPageContainer';
 import {initializeApp} from './redux/app-reducer';
+import {getRestaurantIsOpen} from './redux/restaurantReducer';
 import {Component} from 'react';
 import HeaderContainer from './components/Header/HeaderContainer';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -16,6 +17,7 @@ import SideBarContainer from './components/SideBar/SideBarContainer';
 class App extends Component {
   componentDidMount() {
     this.props.initializeApp();
+    this.props.getRestaurantIsOpen();
   }
 
   render() {
@@ -44,7 +46,7 @@ const mapStateToProps = (state) => ({
 });
 
 const AppContainer = compose(
-    connect(mapStateToProps, {initializeApp}),
+    connect(mapStateToProps, {initializeApp, getRestaurantIsOpen}),
     withRouter,
 )(App);
 
