@@ -64,7 +64,7 @@ export const login = (username, password) => async (dispach) => {
     if (response.status === 200) {
       const accessToken = response.data.access;
       const refreshToken = response.data.refresh;
-      localStorage.setItem('token', response.data.access);
+      localStorage.setItem('token', accessToken);
       dispach(setAuthUserToken(accessToken, refreshToken));
       dispach(getAuthUserData(accessToken));
     }

@@ -28,4 +28,9 @@
         <td>/api/accounts/profile/id/</td>
         <td>подробный вид профиля пользователя</td>
     </tr>
+    <tr>
+        <td>/api/restoran/day</td>
+        <td>get</td>
+        <td>текущий день</td>
+    </tr>
 </table>

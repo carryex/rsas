@@ -54,9 +54,14 @@ export const authAPI = {
       throw err;
     });
   },
+};
 
-  // logout(email, password, rememberMe = false) {
-  //   return instance.delete("/auth/login").then((response) => response.data);
-  // },
+export const restoranAPI = {
+  isOpen() {
+    return instance.get('api/restoran/')
+    .catch(err => {
+      throw err;
+    });
+  },
 };
 

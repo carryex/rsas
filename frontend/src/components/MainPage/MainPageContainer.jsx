@@ -1,26 +1,32 @@
 import {connect} from 'react-redux';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 import {compose} from 'redux';
+import {getRestoranIsOpen} from '../../redux/restoran-reducer';
 
-const MainPageContainer = (props) => {
-
+const MainPageContainer = ({isOpen}) => {
+      let message;
+      if (isOpen) {
+        message = <div>open</div>;
+      } else {
+        message = <div>close</div>;
+      }
   return (
       <div>
         <h2>Main page</h2>
-        <ul>
-          <li><button>Open day</button></li>
-          <li><button>Close day</button></li>
-          <li><button>Create Order</button></li>
-          <li><button>Sign out</button></li>
-        </ul>
+        <div>
+          {message }
+        </div>
       </div>
   );
 };
 
-const mapStateToProps = (state) => ({});
-
+const mapStateToProps = (state) => ({
+  isOpen: state.restoran.isOpen,
+});
 
 export default compose(
-  connect(mapStateToProps, {}),
-  withAuthRedirect
+    connect(mapStateToProps, {
+      getRestoranIsOpen,
+    }),
+    withAuthRedirect,
 )(MainPageContainer);

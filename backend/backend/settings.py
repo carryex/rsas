@@ -18,6 +18,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework_simplejwt',
     'accounts.apps.AccountsConfig',
+    'restoran.apps.RestoranConfig',
 ]
 
 MIDDLEWARE = [
@@ -32,7 +33,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 CORS_ORIGIN_ALLOW_ALL = True
-
+# CORS_ORIGIN_WHITELIST = (
+#      'localhost:3000/'
+#  )
 ROOT_URLCONF = 'backend.urls'
 
 TEMPLATES = [
