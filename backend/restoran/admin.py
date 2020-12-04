@@ -1,8 +1,11 @@
 from django.contrib import admin
-from .models import CashDay  # add this
+from .models import CashDay, ProductCategory
 
-class CashDayAdmin(admin.ModelAdmin):  # add this
-    list_display = ('created_at', 'modified_at', 'open')  # add this
 
-# Register your models here.
-admin.site.register(CashDay, CashDayAdmin)  # add this
+class CashDayAdmin(admin.ModelAdmin):
+    list_display = ('created_at', 'modified_at', 'open')
+admin.site.register(CashDay, CashDayAdmin)
+
+class ProductCategoryAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+admin.site.register(ProductCategory, ProductCategoryAdmin)

@@ -1,9 +1,11 @@
 import {restoranAPI} from '../api/api';
 
 const SET_IS_OPEN = 'SET_IS_OPEN';
+const SET_PRODUCT_CATEGORIES = 'SET_PRODUCT_CATEGORIES';
 //initial state
 let initialState = {
   isOpen: false,
+  productCategories: [],
 };
 
 //reducer
@@ -14,12 +16,22 @@ const restaurantReducer = (state = initialState, action) => {
         ...state,
         ...action.payload,
       };
+    case SET_PRODUCT_CATEGORIES:
+      return {
+        ...state,
+        ...action.payload,
+      };
     default:
       return state;
   }
 };
 
 //action creators
+export const setProductCategories = (productCategories) => ({
+  type: SET_PRODUCT_CATEGORIES,
+  payload: {productCategories},
+});
+
 export const setIsOpen = (isOpen) => ({
   type: SET_IS_OPEN,
   payload: {isOpen},
@@ -56,6 +68,17 @@ export const openDay = () => async (dispach) => {
     if (response.status === 201) {
       dispach(setIsOpen(response.data.open));
       console.log(response.data);
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const getProductCategories = () => async (dispach) => {
+  try {
+    let response = await restoranAPI.getСategories()
+    if (response.status === 200) {
+      dispach(setProductCategories(response.data));
     }
   } catch (e) {
     console.log(e);

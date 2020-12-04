@@ -1,6 +1,7 @@
-from . import views
-from django.conf.urls import url
+from .views import CashDayViewSet, CategoriesViewSet
+from django.urls import path
 
 urlpatterns = [
-    url('', views.current_day),
+    path("day/",CashDayViewSet.as_view(),name="cash-day"),
+    path("categories/",CategoriesViewSet.as_view(),name="products-categories"),
 ]

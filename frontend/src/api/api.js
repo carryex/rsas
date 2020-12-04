@@ -20,6 +20,11 @@ export const authAPI = {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
+    }).catch(err => {
+      if (err.response.status === 401) {
+        throw new Error(`${err.config.url} not aloowed`);
+      }
+      throw err;
     });
   },
   create(username, password) {
@@ -28,7 +33,7 @@ export const authAPI = {
       password,
     }).catch(err => {
       if (err.response.status === 401) {
-        throw new Error(`${err.config.url} not aloowed`);
+        throw new Error(`${err.config.url} not alowed`);
       }
       throw err;
     });
@@ -39,7 +44,7 @@ export const authAPI = {
       refreshToken,
     }).catch(err => {
       if (err.response.status === 401) {
-        throw new Error(`${err.config.url} not aloowed`);
+        throw new Error(`${err.config.url} not alowed`);
       }
       throw err;
     });
@@ -58,24 +63,28 @@ export const authAPI = {
 
 export const restoranAPI = {
   isOpen() {
-    return instance.get('api/restoran/')
-    .catch(err => {
+    return instance.get('api/restoran/day/').catch(err => {
       throw err;
     });
   },
   closeDay() {
-    return instance.put('api/restoran/',{
-      open:false
-    })
-    .catch(err => {
+    return instance.put('api/restoran/day/', {
+      open: false,
+    }).catch(err => {
       throw err;
     });
   },
   openDay() {
-    return instance.post('api/restoran/',{})
-    .catch(err => {
+    return instance.post('api/restoran/day/', {}).catch(err => {
       throw err;
     });
-  }
+  },
+  getСategories() {
+    return instance.get('api/restoran/categories/').catch(err => {
+      throw err;
+    });
+  },
 };
+
+
 

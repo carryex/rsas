@@ -52,6 +52,9 @@ export const getAuthUserData = (accessToken) => async (dispach) => {
       dispach(setAuthUserData(email, id, username, true));
     }
   } catch (e) {
+    if (e.status === 401) {
+      console.log(e);
+    }
     console.log(e);
   }
 
