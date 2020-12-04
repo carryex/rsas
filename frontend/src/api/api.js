@@ -63,5 +63,19 @@ export const restoranAPI = {
       throw err;
     });
   },
+  closeDay() {
+    return instance.put('api/restoran/',{
+      open:false
+    })
+    .catch(err => {
+      throw err;
+    });
+  },
+  openDay() {
+    return instance.post('api/restoran/',{})
+    .catch(err => {
+      throw err;
+    });
+  }
 };
 

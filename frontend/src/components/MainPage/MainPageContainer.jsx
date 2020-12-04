@@ -3,17 +3,20 @@ import {connect} from 'react-redux';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 import {compose} from 'redux';
 import MainPage from './MainPage';
+import {closeDay, openDay} from '../../redux/restaurantReducer';
 
-const MainPageContainer = ({restoranIsOpen}) => {
-  return <MainPage restoranIsOpen={restoranIsOpen}/>;
+const MainPageContainer = ({restaurantIsOpen,closeDay,openDay}) => {
+  return <MainPage restaurantIsOpen={restaurantIsOpen} closeDay={closeDay} openDay={openDay}/>;
 };
 
 const mapStateToProps = (state) => ({
-  restoranIsOpen: state.restaurant.isOpen,
+  restaurantIsOpen: state.restaurant.isOpen,
 });
 
 export default compose(
     connect(mapStateToProps, {
+      closeDay,
+      openDay,
     }),
     withAuthRedirect,
 )(MainPageContainer);

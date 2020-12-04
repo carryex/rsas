@@ -1,13 +1,13 @@
-const MainPage = ({restoranIsOpen}) => {
+const MainPage = ({restaurantIsOpen, closeDay, openDay}) => {
   return (
       <div>
-        {restoranIsOpen ? (
-            <button>closeDay</button>
+        {restaurantIsOpen ? (
+            <button onClick={closeDay}>closeDay</button>
         ) : (
-            <button>openDay</button>
+            <button onClick={openDay}>openDay</button>
         )}
       </div>
 
-  )
-}
-export default MainPage
+  );
+};
+export default MainPage;

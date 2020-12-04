@@ -38,4 +38,28 @@ export const getRestaurantIsOpen = () => async (dispach) => {
 
 };
 
+export const closeDay = () => async (dispach) => {
+  try {
+    let response = await restoranAPI.closeDay();
+    if (response.status === 200) {
+      //   dispach(setIsOpen(response.data.open));
+      console.log(response.data);
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const openDay = () => async (dispach) => {
+  try {
+    let response = await restoranAPI.openDay();
+    if (response.status === 200) {
+      //   dispach(setIsOpen(response.data.open));
+      console.log(response.data);
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 export default restaurantReducer;

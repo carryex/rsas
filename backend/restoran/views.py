@@ -1,5 +1,8 @@
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from rest_framework import viewsets
+from rest_framework.parsers import JSONParser
+
 from .serializers import CashDaySerializer
 from .models import CashDay
 from rest_framework.response import Response
@@ -7,8 +10,7 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 import datetime
 
-
-@api_view(['GET'])
+@api_view(['GET', 'POST','PUT'])
 def current_day(request):
     if request.method == 'GET':
         try:
@@ -18,6 +20,29 @@ def current_day(request):
             return Response(status=status.HTTP_204_NO_CONTENT)
         return Response(serializer.data,status=status.HTTP_200_OK)
 
+    elif request.method == 'POST':
+        try:
+            day = CashDay(open=True)
+            day.save()
+            serializer = CashDaySerializer(day)
+            return JsonResponse(serializer.data, status=201)
+        except:
+            return HttpResponse(status=404)
+
+    elif request.method == 'PUT':
+        try:
+            cashDay = CashDay.objects.last()
+        except:
+            return HttpResponse(status=404)
+
+        try:
+            cashDay.open = False
+            cashDay.save()
+        except:
+            return HttpResponse(status=404)
+
+        serializer = CashDaySerializer(cashDay, many=False)
+        return JsonResponse(serializer.data, status=201)
 # @api_view(['GET', 'PUT', 'DELETE'])
 # def customers_detail(request, pk):
 #     """
