@@ -42,7 +42,7 @@ export const closeDay = () => async (dispach) => {
   try {
     let response = await restoranAPI.closeDay();
     if (response.status === 200) {
-      //   dispach(setIsOpen(response.data.open));
+      dispach(setIsOpen(response.data.open));
       console.log(response.data);
     }
   } catch (e) {
@@ -53,8 +53,8 @@ export const closeDay = () => async (dispach) => {
 export const openDay = () => async (dispach) => {
   try {
     let response = await restoranAPI.openDay();
-    if (response.status === 200) {
-      //   dispach(setIsOpen(response.data.open));
+    if (response.status === 201) {
+      dispach(setIsOpen(response.data.open));
       console.log(response.data);
     }
   } catch (e) {

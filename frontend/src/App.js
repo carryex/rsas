@@ -30,8 +30,8 @@ class App extends Component {
           <HeaderContainer/>
           <SideBarContainer/>
           <Toolbar/>
-          <Grid container>
-            <Grid item>
+          <Grid container spacing={4}>
+            <Grid item xs={12}>
               <Route exact path="/" render={() => <MainPageContainer/>}/>
               <Route path="/login" render={() => <AuthContainer/>}/>
             </Grid>

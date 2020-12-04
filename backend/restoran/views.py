@@ -42,7 +42,7 @@ def current_day(request):
             return HttpResponse(status=404)
 
         serializer = CashDaySerializer(cashDay, many=False)
-        return JsonResponse(serializer.data, status=201)
+        return JsonResponse(serializer.data, status=200)
 # @api_view(['GET', 'PUT', 'DELETE'])
 # def customers_detail(request, pk):
 #     """
