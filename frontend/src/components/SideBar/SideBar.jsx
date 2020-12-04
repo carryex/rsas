@@ -29,11 +29,11 @@ const SideBar = ({toggleDrawer, isOpen}) => {
               toggleDrawer(!isOpen);
             }}
         >
-          <ListItem button component={Link} to={'/profile'}>
+          <ListItem button component={Link} to={'/'}>
             <ListItemIcon>
               <AccountCircleIcon/>
             </ListItemIcon>
-            <ListItemText primary={'profile'}/>
+            <ListItemText primary={'main'}/>
           </ListItem>
 
         </List>
