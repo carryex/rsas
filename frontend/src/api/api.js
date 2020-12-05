@@ -38,7 +38,6 @@ export const authAPI = {
       throw err;
     });
   },
-
   refresh(refreshToken) {
     return instance.post('auth/jwt/refresh/', {
       refreshToken,
@@ -81,6 +80,11 @@ export const restoranAPI = {
   },
   getСategories() {
     return instance.get('api/restoran/categories/').catch(err => {
+      throw err;
+    });
+  },
+  getProducts() {
+    return instance.get('api/restoran/products/').catch(err => {
       throw err;
     });
   },

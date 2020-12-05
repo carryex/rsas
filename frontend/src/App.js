@@ -5,7 +5,6 @@ import {compose} from 'redux';
 import AuthContainer from './components/Auth/AuthContainer';
 import MainPageContainer from './components/MainPage/MainPageContainer';
 import {initializeApp} from './redux/app-reducer';
-import {getRestaurantIsOpen} from './redux/restaurantReducer';
 import React, {useEffect} from 'react';
 import HeaderContainer from './components/Header/HeaderContainer';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -14,17 +13,17 @@ import Toolbar from '@material-ui/core/Toolbar';
 import SideBarContainer from './components/SideBar/SideBarContainer';
 import NewOrderContainer from './components/NewOrderPage/NewOrderContainer';
 import Preloader from './components/UI/Preloader/Preloader';
+import {getRestaurantIsOpen} from './redux/restaurantReducer';
 
-const App = ({initialized, initializeApp, getRestaurantIsOpen}) => {
+const App = ({initialized, initializeApp,getRestaurantIsOpen}) => {
   useEffect(() => {
     initializeApp();
     getRestaurantIsOpen();
-  });
+  },[]);
 
   if (!initialized) {
-    return <Preloader />
+    return <Preloader/>;
   }
-
   return (
       <div className="app">
         <CssBaseline/>
@@ -47,7 +46,7 @@ const mapStateToProps = (state) => ({
 });
 
 const AppContainer = compose(
-    connect(mapStateToProps, {initializeApp, getRestaurantIsOpen}),
+    connect(mapStateToProps, {initializeApp,getRestaurantIsOpen}),
     withRouter,
 )(App);
 

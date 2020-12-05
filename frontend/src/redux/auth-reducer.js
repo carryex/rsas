@@ -44,7 +44,7 @@ export const setAuthUserToken = (accessToken, refreshToken) => ({
 });
 
 //thunks
-export const getAuthUserData = (accessToken) => async (dispach) => {
+export const getAuthUserData = (accessToken = null) => async (dispach) => {
   try {
     let response = await authAPI.me(accessToken);
     if (response.status === 200) {
@@ -53,15 +53,14 @@ export const getAuthUserData = (accessToken) => async (dispach) => {
     }
   } catch (e) {
     if (e.status === 401) {
-      console.log(e);
+      console.log(e.message);
     }
-    console.log(e);
+    console.log(e.message);
   }
 
 };
 
 export const login = (username, password) => async (dispach) => {
-
   try {
     let response = await authAPI.create(username, password);
     if (response.status === 200) {
