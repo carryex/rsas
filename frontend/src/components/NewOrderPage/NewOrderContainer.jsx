@@ -9,6 +9,7 @@ const NewOrderContainer = ({getProductCategories}) => {
   useEffect(() => {
     getProductCategories();
   });
+
   return <NewOrder/>;
 };
 
