@@ -106,12 +106,10 @@ export const getProductCategories = () => async (dispach) => {
 };
 
 export const getProductsByCategoryID = (categoryID) => async (dispach) => {
-  dispach(toogleIsFetching(true));
   try {
     let response = await restoranAPI.getProductsWithСategories(categoryID);
     if (response.status === 200) {
       dispach(setProducts(response.data.products));
-      dispach(toogleIsFetching(false));
     }
   } catch (e) {
     console.log(e);

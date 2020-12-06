@@ -58,8 +58,3 @@ class CategoriesViewSet(ReadOnlyModelViewSet):
 
         serializer = ProductCategoryListSerializer(queryset, many=True)
         return Response(serializer.data)
-
-class ProductViewSet(ListAPIView):
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
-    permission_classes = [permissions.AllowAny]

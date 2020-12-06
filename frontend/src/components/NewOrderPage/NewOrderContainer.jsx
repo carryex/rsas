@@ -4,7 +4,7 @@ import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 import {compose} from 'redux';
 import NewOrder from './NewOrder';
 import {
-  getProductCategories,
+  getProductCategories, getProductsByCategoryID,
 } from '../../redux/restaurantReducer';
 import {
   getCategories,
@@ -17,10 +17,14 @@ import {
 import Preloader from '../UI/Preloader/Preloader';
 import {addProduct} from '../../redux/orderReducer';
 
-const NewOrderContainer = ({getProductCategories, categories, products, getProducts, isFetching,order,addProduct}) => {
+const NewOrderContainer = ({getProductCategories, categories, products, isFetching, order, addProduct, getProductsByCategoryID}) => {
   useEffect(() => {
     getProductCategories();
   }, []);
+
+  const onCategoryClick = (categoryID) => {
+    getProductsByCategoryID(categoryID);
+  };
 
   const onProductClick = (product) => {
     addProduct(product);
@@ -29,7 +33,9 @@ const NewOrderContainer = ({getProductCategories, categories, products, getProdu
     return <Preloader/>;
   }
 
-  return <NewOrder categories={categories} products={products} order={order} onProductClick={onProductClick}/>;
+  return <NewOrder categories={categories} products={products} order={order}
+                   onProductClick={onProductClick}
+                   onCategoryClick={onCategoryClick}/>;
 };
 
 const mapStateToProps = (state) => ({
@@ -43,6 +49,7 @@ export default compose(
     connect(mapStateToProps, {
       getProductCategories,
       addProduct,
+      getProductsByCategoryID,
     }),
     withAuthRedirect,
 )(NewOrderContainer);

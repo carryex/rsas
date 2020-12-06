@@ -1,15 +1,6 @@
 from .views import CashDayViewSet
-# from django.urls import path
-
-# urlpatterns = [
-#     path("day/",CashDayViewSet.as_view(),name="cash-day"),
-#     path("products/",ProductViewSet.as_view(),name="list-products"),
-#     path("categories/",CategoriesViewSet.as_view(),name="products-categories"),
-#     # path("category/",ProductByCategoryIdViewSet.as_view(),name="products"),
-# ]
 from django.urls import path
 from rest_framework.urlpatterns import format_suffix_patterns
-
 from .views import CategoriesViewSet
 
 category_detail = CategoriesViewSet.as_view({
