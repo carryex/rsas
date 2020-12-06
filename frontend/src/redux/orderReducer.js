@@ -9,11 +9,21 @@ let initialState = {
 const orderReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_PRODUCT:
-      return {
-        ...state,
-        // postsData: state.postsData.filter((p) => p.id !== action.postId),
-        products: [...state.products, action.payload],
-      };
+      let addItem = action.payload.product;
+      let existed_item = state.products.find(item => addItem.id === item.id);
+      if (existed_item) {
+        existed_item.quantity += 1;
+        return {
+          ...state,
+          products: [...state.products],
+        };
+      } else {
+        addItem.quantity = 1;
+        return {
+          ...state,
+          products: [...state.products, addItem],
+        };
+      }
     default:
       return state;
   }
