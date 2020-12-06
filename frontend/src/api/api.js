@@ -83,10 +83,11 @@ export const restoranAPI = {
       throw err;
     });
   },
-  getProducts() {
-    return instance.get('api/restoran/products/').catch(err => {
-      throw err;
-    });
+  getProductsWithСategories(categoryID = null) {
+    return instance.get(`api/restoran/categories/${categoryID}`).
+        catch(err => {
+          throw err;
+        });
   },
 };
 

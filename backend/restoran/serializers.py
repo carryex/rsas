@@ -8,12 +8,20 @@ class CashDaySerializer(serializers.ModelSerializer):
         fields = ('open',)
 
 
-class ProductCategorySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ProductCategory
-        fields = ('id', 'name',)
-
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ('id', 'name','category')
+        fields = ('id', 'name')
+
+
+class ProductCategoryListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductCategory
+        fields = ('id', 'name')
+
+class ProductCategorySerializer(serializers.ModelSerializer):
+    products = ProductSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = ProductCategory
+        fields = ('id', 'name', 'products')

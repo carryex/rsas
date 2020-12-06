@@ -7,6 +7,10 @@ export const getProducts = createSelector(getProductsSelector, (products) => {
   return products.filter((u) => true);
 });
 
+export const getWithCategoriesProducts = createSelector(getProductsSelector, (products) => {
+  return products.filter((u) => u.category === categoryId);
+});
+
 const getCategoriesSelector = (state) => {
   return state.restaurant.productCategories;
 };

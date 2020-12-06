@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Products = ({products}) => {
+const Products = ({products,onProductClick}) => {
   const classes = useStyles();
 
   const productElements = products.map((product) => (
@@ -28,7 +28,9 @@ const Products = ({products}) => {
           color="primary"
           variant="contained"
           className={classes.submit}
-          key={product.id}>
+          key={product.id}
+          onClick={() => {onProductClick(product)}}
+      >
         {product.name}
       </Button>
   ));

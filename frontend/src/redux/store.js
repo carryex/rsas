@@ -5,6 +5,7 @@ import thunkMiddleware from "redux-thunk";
 import { reducer as formReducer } from "redux-form";
 import appReducer from './app-reducer';
 import navigationReducer from './navigationReducer';
+import orderReducer from './orderReducer';
 
 let reducers = combineReducers({
   auth: authReducer,
@@ -12,6 +13,7 @@ let reducers = combineReducers({
   app: appReducer,
   restaurant: restaurantReducer,
   navigation: navigationReducer,
+  order: orderReducer,
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
