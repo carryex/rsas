@@ -1,7 +1,18 @@
 import React from 'react';
+import Button from '@material-ui/core/Button';
+import {Link as RouterLink} from 'react-router-dom';
 
 const Order = ({order}) => {
-  return (<h1>ORDER</h1>
+  // const orderElemets = order.map((product) => (
+  //     <span key={product.id}>{product.name} : {product.quantity}</span>
+  // ));
+
+  return (
+      <div>
+        {order.map((product) => (
+            <span key={product.id}>{product.name} : {product.quantity}</span>
+        ))}
+      </div>
   );
 };
 
