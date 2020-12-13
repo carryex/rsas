@@ -15,9 +15,9 @@ import {
   getOrder,
 } from '../../redux/orderSelectors';
 import Preloader from '../UI/Preloader/Preloader';
-import {addProduct} from '../../redux/orderReducer';
+import {addProduct, decreaseProduct} from '../../redux/orderReducer';
 
-const NewOrderContainer = ({getProductCategories, categories, products, isFetching, order, addProduct, getProductsByCategoryID}) => {
+const NewOrderContainer = ({getProductCategories, categories, products, isFetching, order, addProduct, getProductsByCategoryID, decreaseProduct}) => {
   useEffect(() => {
     getProductCategories();
   }, []);
@@ -29,12 +29,17 @@ const NewOrderContainer = ({getProductCategories, categories, products, isFetchi
   const onProductClick = (product) => {
     addProduct(product);
   };
+
+  const onReduceProductClick = (product) => {
+    decreaseProduct(product);
+  };
   if (isFetching) {
     return <Preloader/>;
   }
 
   return <NewOrder categories={categories} products={products} order={order}
                    onProductClick={onProductClick}
+                   onReduceProductClick={onReduceProductClick}
                    onCategoryClick={onCategoryClick}/>;
 };
 
@@ -50,6 +55,7 @@ export default compose(
       getProductCategories,
       addProduct,
       getProductsByCategoryID,
+      decreaseProduct,
     }),
     withAuthRedirect,
 )(NewOrderContainer);

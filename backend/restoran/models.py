@@ -17,6 +17,7 @@ class Product(models.Model):
     name = models.CharField(max_length=10)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
+    price = models.DecimalField(verbose_name='price',max_digits=5, decimal_places=2, default=0.00)
     category = models.ForeignKey(ProductCategory, on_delete=models.PROTECT,related_name='products')
 
 

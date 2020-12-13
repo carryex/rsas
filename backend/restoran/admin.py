@@ -11,5 +11,5 @@ class ProductCategoryAdmin(admin.ModelAdmin):
 admin.site.register(ProductCategory, ProductCategoryAdmin)
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name',)
+    list_display = ('name','price')
 admin.site.register(Product, ProductAdmin)
