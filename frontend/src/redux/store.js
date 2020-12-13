@@ -6,6 +6,7 @@ import { reducer as formReducer } from "redux-form";
 import appReducer from './app-reducer';
 import navigationReducer from './navigationReducer';
 import orderReducer from './orderReducer';
+import usersReducer from "./userReducer";
 
 let reducers = combineReducers({
   auth: authReducer,
@@ -14,6 +15,7 @@ let reducers = combineReducers({
   restaurant: restaurantReducer,
   navigation: navigationReducer,
   order: orderReducer,
+  users: usersReducer,
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

@@ -94,8 +94,9 @@ export const setInPayment = (inPayment) => ({
 });
 
 export const payOrder = (order, orderTotalCost) => async (dispach) => {
+  const accessToken = localStorage.getItem("token");
   try {
-    let response = await orderAPI.pay(order, orderTotalCost);
+    let response = await orderAPI.pay(order, orderTotalCost,accessToken);
     if (response.status === 201) {
       console.log(response);
     }

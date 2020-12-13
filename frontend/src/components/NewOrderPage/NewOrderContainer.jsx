@@ -14,6 +14,7 @@ import {
 } from "../../redux/restarauntSelectors";
 import { getOrder, getOrderTotalCost, getInPayment } from "../../redux/orderSelectors";
 import Preloader from "../UI/Preloader/Preloader";
+import { requestUsers } from "../../redux/userReducer";
 import { addProduct, decreaseProduct, setInPayment, payOrder } from "../../redux/orderReducer";
 import Payment from "./Payment/Payment";
 
@@ -29,10 +30,12 @@ const NewOrderContainer = ({
   orderTotalCost,
   setInPayment,
   inPayment,
+  getUsers,
   payOrder,
 }) => {
   useEffect(() => {
     getProductCategories();
+    getUsers();
   }, []);
 
   const onCategoryClick = (categoryID) => {
@@ -93,6 +96,7 @@ export default compose(
     decreaseProduct,
     setInPayment,
     payOrder,
+    getUsers: requestUsers,
   }),
   withAuthRedirect
 )(NewOrderContainer);

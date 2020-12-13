@@ -15,7 +15,7 @@ class ProductAdmin(admin.ModelAdmin):
 admin.site.register(Product, ProductAdmin)
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('totalCost',)
+    list_display = ('totalCost','userProfile')
 admin.site.register(Order, OrderAdmin)
 
 class OrderItemAdmin(admin.ModelAdmin):

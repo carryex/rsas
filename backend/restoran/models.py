@@ -1,4 +1,6 @@
 from django.db import models
+from accounts.models import UserProfile
+
 
 class CashDay(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
@@ -23,6 +25,7 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 class Order(models.Model):
+    userProfile = models.ForeignKey(UserProfile, on_delete=models.PROTECT,related_name='orders',null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
     totalCost = models.DecimalField(verbose_name='totalCost', max_digits=5, decimal_places=2, default=0.00)

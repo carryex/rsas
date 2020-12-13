@@ -1,13 +1,12 @@
 from django.http import HttpResponse, JsonResponse
-from rest_framework.generics import RetrieveUpdateAPIView, ListAPIView, ListCreateAPIView
+from rest_framework.generics import RetrieveUpdateAPIView, ListCreateAPIView
 from rest_framework.viewsets import ReadOnlyModelViewSet
-
-from .serializers import CashDaySerializer, ProductCategorySerializer, ProductSerializer, ProductCategoryListSerializer, \
+from .serializers import CashDaySerializer, ProductCategorySerializer, ProductCategoryListSerializer, \
     OrderSerializer
-from .models import CashDay, ProductCategory, Product, Order
+from .models import CashDay, ProductCategory, Order
 from rest_framework.response import Response
 from rest_framework import status, permissions
-
+from accounts.models import UserProfile
 
 class CashDayViewSet(RetrieveUpdateAPIView):
     def get(self, request, *args, **kwargs):
@@ -65,16 +64,22 @@ class CategoriesViewSet(ReadOnlyModelViewSet):
 class OrderViewSet(ListCreateAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        print(request.data)
         serializer = OrderSerializer(data=request.data)
-        print(serializer)
         if serializer.is_valid():
             order = serializer.save()
+            if (request.data['userProfile']):
+                try:
+                    # user = UserProfile.objects.find(pk=request.data['userProfile'])
+                    user = UserProfile.objects.last()
+                    order.userProfile = user
+                    order.save()
+                except:
+                    return Response(status=status.HTTP_204_NO_CONTENT)
             return Response(OrderSerializer(order).data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -105,17 +105,44 @@ export const restoranAPI = {
 };
 
 export const orderAPI = {
-  pay(order, orderTotalCost) {
+  pay(order, orderTotalCost, accessToken, userProfile = 2) {
     return instance
-    .post("api/restoran/order/", {
-      orderItems: order,
-      totalCost: orderTotalCost,
-    })
-    .catch((err) => {
-      if (err.response.status === 401) {
-        throw new Error(`${err.config.url} not aloowed`);
-      }
-      throw err;
-    });
+      .post(
+        "api/restoran/order/",
+        {
+          orderItems: order,
+          totalCost: orderTotalCost,
+          userProfile: userProfile,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      )
+      .catch((err) => {
+        if (err.response.status === 401) {
+          throw new Error(`${err.config.url} not aloowed`);
+        }
+        throw err;
+      });
+  },
+};
+
+
+export const userAPI = {
+  getUsers(accessToken) {
+    return instance
+      .get("api/accounts/profiles", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          throw new Error(`${err.config.url} not aloowed`);
+        }
+        throw err;
+      });
   },
 };
