@@ -1,9 +1,10 @@
 from django.http import HttpResponse, JsonResponse
-from rest_framework.generics import RetrieveUpdateAPIView, ListAPIView
+from rest_framework.generics import RetrieveUpdateAPIView, ListAPIView, ListCreateAPIView
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
-from .serializers import CashDaySerializer, ProductCategorySerializer, ProductSerializer, ProductCategoryListSerializer
-from .models import CashDay, ProductCategory, Product
+from .serializers import CashDaySerializer, ProductCategorySerializer, ProductSerializer, ProductCategoryListSerializer, \
+    OrderSerializer
+from .models import CashDay, ProductCategory, Product, Order
 from rest_framework.response import Response
 from rest_framework import status, permissions
 
@@ -43,6 +44,7 @@ class CashDayViewSet(RetrieveUpdateAPIView):
     def patch(self, request, *args, **kwargs):
         return self.partial_update(request, *args, **kwargs)
 
+
 class CategoriesViewSet(ReadOnlyModelViewSet):
     queryset = ProductCategory.objects.all()
     serializer_class = ProductCategorySerializer
@@ -58,3 +60,21 @@ class CategoriesViewSet(ReadOnlyModelViewSet):
 
         serializer = ProductCategoryListSerializer(queryset, many=True)
         return Response(serializer.data)
+
+
+class OrderViewSet(ListCreateAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        print(request.data)
+        serializer = OrderSerializer(data=request.data)
+        print(serializer)
+        if serializer.is_valid():
+            order = serializer.save()
+            return Response(OrderSerializer(order).data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

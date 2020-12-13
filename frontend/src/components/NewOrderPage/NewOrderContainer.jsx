@@ -1,23 +1,36 @@
-import React, {useEffect} from 'react';
-import {connect} from 'react-redux';
-import {withAuthRedirect} from '../../hoc/withAuthRedirect';
-import {compose} from 'redux';
-import NewOrder from './NewOrder';
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import { withAuthRedirect } from "../../hoc/withAuthRedirect";
+import { compose } from "redux";
+import NewOrder from "./NewOrder";
 import {
-  getProductCategories, getProductsByCategoryID,
-} from '../../redux/restaurantReducer';
+  getProductCategories,
+  getProductsByCategoryID,
+} from "../../redux/restaurantReducer";
 import {
   getCategories,
   getIsFetching,
   getProducts,
-} from '../../redux/restarauntSelectors';
-import {
-  getOrder,
-} from '../../redux/orderSelectors';
-import Preloader from '../UI/Preloader/Preloader';
-import {addProduct, decreaseProduct} from '../../redux/orderReducer';
+} from "../../redux/restarauntSelectors";
+import { getOrder, getOrderTotalCost, getInPayment } from "../../redux/orderSelectors";
+import Preloader from "../UI/Preloader/Preloader";
+import { addProduct, decreaseProduct, setInPayment, payOrder } from "../../redux/orderReducer";
+import Payment from "./Payment/Payment";
 
-const NewOrderContainer = ({getProductCategories, categories, products, isFetching, order, addProduct, getProductsByCategoryID, decreaseProduct}) => {
+const NewOrderContainer = ({
+  getProductCategories,
+  categories,
+  products,
+  isFetching,
+  order,
+  addProduct,
+  getProductsByCategoryID,
+  decreaseProduct,
+  orderTotalCost,
+  setInPayment,
+  inPayment,
+  payOrder,
+}) => {
   useEffect(() => {
     getProductCategories();
   }, []);
@@ -33,14 +46,34 @@ const NewOrderContainer = ({getProductCategories, categories, products, isFetchi
   const onReduceProductClick = (product) => {
     decreaseProduct(product);
   };
-  if (isFetching) {
-    return <Preloader/>;
+
+  const onPaymentClick = (inPayment) => {
+    setInPayment(inPayment);
   }
 
-  return <NewOrder categories={categories} products={products} order={order}
-                   onProductClick={onProductClick}
-                   onReduceProductClick={onReduceProductClick}
-                   onCategoryClick={onCategoryClick}/>;
+  const onPayClick = (order, orderTotalCost) => {
+    payOrder(order,orderTotalCost);
+  }
+  if (isFetching) {
+    return <Preloader />;
+  }
+
+  if (inPayment) {
+    return <Payment  order={order} orderTotalCost={orderTotalCost} onCancelClick={onPaymentClick} onPayClick={onPayClick}/>
+  }
+
+  return (
+    <NewOrder
+      categories={categories}
+      products={products}
+      order={order}
+      onProductClick={onProductClick}
+      onReduceProductClick={onReduceProductClick}
+      onCategoryClick={onCategoryClick}
+      orderTotalCost={orderTotalCost}
+      onPaymentClick={onPaymentClick}
+    />
+  );
 };
 
 const mapStateToProps = (state) => ({
@@ -48,14 +81,18 @@ const mapStateToProps = (state) => ({
   products: getProducts(state),
   isFetching: getIsFetching(state),
   order: getOrder(state),
+  orderTotalCost: getOrderTotalCost(state),
+  inPayment: getInPayment(state),
 });
 
 export default compose(
-    connect(mapStateToProps, {
-      getProductCategories,
-      addProduct,
-      getProductsByCategoryID,
-      decreaseProduct,
-    }),
-    withAuthRedirect,
+  connect(mapStateToProps, {
+    getProductCategories,
+    addProduct,
+    getProductsByCategoryID,
+    decreaseProduct,
+    setInPayment,
+    payOrder,
+  }),
+  withAuthRedirect
 )(NewOrderContainer);

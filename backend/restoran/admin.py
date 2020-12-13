@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import CashDay, ProductCategory, Product
+from .models import CashDay, ProductCategory, Product, Order, OrderItem
 
 
 class CashDayAdmin(admin.ModelAdmin):
@@ -13,3 +13,11 @@ admin.site.register(ProductCategory, ProductCategoryAdmin)
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('name','price')
 admin.site.register(Product, ProductAdmin)
+
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ('totalCost',)
+admin.site.register(Order, OrderAdmin)
+
+class OrderItemAdmin(admin.ModelAdmin):
+    list_display = ('order','name','quantity','totalCost')
+admin.site.register(OrderItem, OrderItemAdmin)
