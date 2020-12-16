@@ -145,4 +145,18 @@ export const userAPI = {
         throw err;
       });
   },
+  getUser(userID,accessToken) {
+    return instance
+      .get("api/accounts/profile/"+userID, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          throw new Error(`${err.config.url} not aloowed`);
+        }
+        throw err;
+      });
+  },
 };

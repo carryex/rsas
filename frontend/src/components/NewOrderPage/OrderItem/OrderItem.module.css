@@ -1,0 +1,25 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+}
+.name {
+    /* display: flex; */
+    padding: 0 5px;
+
+}
+.button {
+    /* display: flex; */
+    width: 25px;
+}
+.quantity {
+    /* display: flex; */
+    padding: 0 5px;
+}
+.price {
+    /* display: flex; */
+    width: 35px;
+}
+.totalCost {
+    /* display: flex; */
+    width: 55px;
+}

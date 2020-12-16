@@ -15,3 +15,7 @@ export const getOrderTotalCost = (state) => {
 export const getInPayment = (state) => {
   return state.order.inPayment;
 }
+
+export const getCurrentUser = (state) => {
+  return state.order.currentUser;
+}

@@ -12,10 +12,24 @@ import {
   getIsFetching,
   getProducts,
 } from "../../redux/restarauntSelectors";
-import { getOrder, getOrderTotalCost, getInPayment } from "../../redux/orderSelectors";
+import {
+  getOrder,
+  getOrderTotalCost,
+  getInPayment,
+  getCurrentUser,
+} from "../../redux/orderSelectors";
+import {
+  getUsers,
+} from "../../redux/userSelectors"
 import Preloader from "../UI/Preloader/Preloader";
 import { requestUsers } from "../../redux/userReducer";
-import { addProduct, decreaseProduct, setInPayment, payOrder } from "../../redux/orderReducer";
+import {
+  addProduct,
+  decreaseProduct,
+  setInPayment,
+  payOrder,
+  addUser,
+} from "../../redux/orderReducer";
 import Payment from "./Payment/Payment";
 
 const NewOrderContainer = ({
@@ -32,6 +46,9 @@ const NewOrderContainer = ({
   inPayment,
   getUsers,
   payOrder,
+  currentUser,
+  users,
+  addUser,
 }) => {
   useEffect(() => {
     getProductCategories();
@@ -52,17 +69,31 @@ const NewOrderContainer = ({
 
   const onPaymentClick = (inPayment) => {
     setInPayment(inPayment);
-  }
+  };
 
   const onPayClick = (order, orderTotalCost) => {
-    payOrder(order,orderTotalCost);
-  }
+    payOrder(order, orderTotalCost);
+  };
+
+  const handleChange = (currentUserID) => {
+    addUser(currentUserID);
+  };
   if (isFetching) {
     return <Preloader />;
   }
 
   if (inPayment) {
-    return <Payment  order={order} orderTotalCost={orderTotalCost} onCancelClick={onPaymentClick} onPayClick={onPayClick}/>
+    return (
+      <Payment
+        order={order}
+        orderTotalCost={orderTotalCost}
+        onCancelClick={onPaymentClick}
+        onPayClick={onPayClick}
+        currentUser={currentUser}
+        handleChange={handleChange}
+        users={users}
+      />
+    );
   }
 
   return (
@@ -86,6 +117,8 @@ const mapStateToProps = (state) => ({
   order: getOrder(state),
   orderTotalCost: getOrderTotalCost(state),
   inPayment: getInPayment(state),
+  currentUser: getCurrentUser(state),
+  users: getUsers(state),
 });
 
 export default compose(
@@ -97,6 +130,7 @@ export default compose(
     setInPayment,
     payOrder,
     getUsers: requestUsers,
+    addUser,
   }),
   withAuthRedirect
 )(NewOrderContainer);
